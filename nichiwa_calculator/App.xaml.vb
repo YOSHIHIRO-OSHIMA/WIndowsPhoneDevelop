@@ -5,6 +5,16 @@ NotInheritable Class App
     Inherits Application
 
     ''' <summary>
+    ''' App クラスの新しいインスタンスを初期化します。
+    ''' </summary>
+    Public Sub New()
+        Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
+            Microsoft.ApplicationInsights.WindowsCollectors.Metadata Or
+            Microsoft.ApplicationInsights.WindowsCollectors.Session)
+        InitializeComponent()
+    End Sub
+
+    ''' <summary>
     ''' アプリケーションがエンド ユーザーによって正常に起動されたときに呼び出されます。他のエントリ ポイントは、
     ''' アプリケーションが特定のファイルを開くために起動されたときに
     ''' 検索結果やその他の情報を表示するために使用されます。
