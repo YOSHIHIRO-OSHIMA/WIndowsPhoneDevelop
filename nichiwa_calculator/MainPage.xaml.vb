@@ -7,34 +7,37 @@ Imports Windows.UI
 ''' </summary>
 Public NotInheritable Class MainPage
 
-    Private strNum As String
-    Private dblValue As Double
-    Private strOpera As String
-    Private previousMode As Mode
-    Private dblResultValue As Double
+    ''' <summary>
+    ''' クラス変数
+    ''' </summary>
+    Private strNum As String             '入力変数
+    Private dblValue As Double           '計算用変数
+    Private strOpera As String           '演算子変数
+    Private previousMode As Mode         '状態変数
+    Private dblResultValue As Double     '計算結果変数
 
+    ''' <summary>
+    ''' 'クラス定数
+    ''' </summary>
     Private Const CON_STR_PLUS As String = "+"
     Private Const CON_STR_MINUS As String = "-"
     Private Const CON_STR_TIME As String = "×"
     Private Const CON_STR_DIVISION As String = "÷"
     Private Const CON_STR_AC As String = "AC"
-    Private Const CON_STR_C As String = "C"
     Private Const CON_STR_ZERO As String = "0"
     Private Const CON_STR_POINT As String = "."
-    Private Const CON_STR_FORMAT As String = "#,##"
+    Private Const CON_STR_FORMAT As String = "#,##" 'フォーマット
 
-
+    ''' <summary>
+    ''' 列挙型画面状態
+    ''' </summary>
     Private Enum Mode
-        init '初期状態
-        inputNum
-        digit_noDec '演算子なし
-        digit_withDec　'演算子あり
+        init 　　 　　'初期状態
+        clear　　　   'クリア状態
+        digit_noDec   '演算子なし
+        digit_withDec '演算子あり
         afterOpera    '演算子直後
         aftercalc     '計算後
-        equals
-        parcent
-        addsub
-        err
 
     End Enum
 
@@ -45,13 +48,8 @@ Public NotInheritable Class MainPage
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します
 
-        Dim aaa As New SolidColorBrush(Colors.White)
-
         '初期化
         txtNum.IsEnabled = False
-        'txtNum.Background = Backgroung
-        btnClear.Content = CON_STR_AC
-        txtNum.Background = aaa
         txtNum.Text = 0
         strNum = String.Empty
         dblValue = 0
@@ -65,22 +63,14 @@ Public NotInheritable Class MainPage
     ''' <param name="e"></param>
     Private Sub BtnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
 
-
-        If previousMode = Mode.init Or previousMode = Mode.aftercalc Then
-
-            strNum = String.Empty
-            txtNum.Text = 0
-            btnClear.Content = CON_STR_C
-
-        Else
-            strNum = String.Empty
-            txtNum.Text = 0
-            dblValue = 0
-            dblResultValue = 0
-            strOpera = String.Empty
-            btnClear.Content = CON_STR_AC
-            previousMode = Mode.init
-        End If
+        '初期化処理
+        strNum = String.Empty
+        txtNum.Text = 0
+        btnClear.Content = CON_STR_AC
+        dblValue = 0
+        dblResultValue = 0
+        strOpera = String.Empty
+        previousMode = Mode.init
 
     End Sub
 
@@ -93,7 +83,7 @@ Public NotInheritable Class MainPage
 
         Dim clickBtn As Button = CType(sender, Button)
 
-
+        '画面状態判定
         Select Case previousMode
 
             Case Mode.init
@@ -136,23 +126,17 @@ Public NotInheritable Class MainPage
 
         Dim clickBtn As Button = CType(sender, Button)
 
-        'Dim aaa As Double
+        If strNum.Length = 0 Then
 
-        'aaa = Math.Floor(Convert.ToDouble(strNum)
+            UpdateDisplayWithDec(clickBtn.Content)
+            previousMode = Mode.digit_noDec
 
-        'If strNum.Length = 0 Then
+        Else
+            If strNum.Contains(CON_STR_POINT) = False Then
+                UpdateDisplayNoDec(clickBtn.Content)
+            End If
 
-        '    UpdateDisplayWithDec(clickBtn.Content)
-        '    previousMode = Mode.digit_noDec
-
-        '    End
-        'Else
-        '    If Convert.ToDouble(strNum) - Math.Floor(Convert.ToDouble(strNum) = 0 then
-
-        '        UpdateDisplayNoDec(clickBtn.Content)
-        '    End If
-
-        'End If
+        End If
 
     End Sub
 
@@ -167,6 +151,7 @@ Public NotInheritable Class MainPage
 
         strOpera = opClickBtn.Content
 
+        '画面状態判定
         Select Case previousMode
 
             Case Mode.init
@@ -187,12 +172,10 @@ Public NotInheritable Class MainPage
 
                 dblValue = Convert.ToDouble(strNum)
 
-
                 previousMode = Mode.afterOpera
 
             Case Mode.aftercalc
 
-                'If strNum.Length <> 0 Then
                 If Double.TryParse(strNum, dblValue) = True Then
                     dblValue = Convert.ToDouble(strNum)
                 Else
@@ -216,10 +199,7 @@ Public NotInheritable Class MainPage
             If previousMode = Mode.digit_withDec Or previousMode = Mode.aftercalc Then
                 CalValue()
                 UpdateDisplayWithDec(dblResultValue)
-                btnClear.Content = CON_STR_C
                 previousMode = Mode.aftercalc
-
-                'btnAdd.Background = New SolidColorBrush(Colors.MediumBlue)
             End If
         End If
     End Sub
@@ -231,8 +211,7 @@ Public NotInheritable Class MainPage
     ''' <param name="e"></param>
     Private Sub ParcentClick(sender As Object, e As RoutedEventArgs) Handles btnParcent.Click
 
-
-
+        '画面状態判定
         Select Case previousMode
 
             Case Mode.digit_noDec
@@ -245,6 +224,7 @@ Public NotInheritable Class MainPage
 
         End Select
 
+        '最大少数桁数チェック
         CheckDecimal()
 
     End Sub
@@ -262,15 +242,11 @@ Public NotInheritable Class MainPage
     ''' <param name="upKey"></param>
     Private Sub UpdateDisplayNoDec(ByVal upKey As String)
 
-        If strNum.Length < 11 Then
+        If strNum.Length < 9 Then
             txtNum.Text = String.Empty
             strNum = String.Concat(strNum, upKey)
-
-            'txtNum.Text = FormatDisplay(strNum)
             txtNum.Text = strNum.ToString
-
         End If
-
 
     End Sub
 
@@ -286,18 +262,8 @@ Public NotInheritable Class MainPage
             strNum = String.Concat(CON_STR_ZERO, strNum.ToString)
             txtNum.Text = strNum.ToString
 
-            'txtNum.Text = String.Format()
-
-            ' txtNum.Text = FormatDisplay(strNum)
-
-            btnClear.Content = CON_STR_C
-
         Else
             txtNum.Text = strNum.ToString
-
-            ' txtNum.Text = FormatDisplay(strNum)
-
-            btnClear.Content = CON_STR_C
 
         End If
 
@@ -322,10 +288,13 @@ Public NotInheritable Class MainPage
                     dblResultValue = dblValue / (Convert.ToDouble(strNum))
             End Select
 
+            '最大桁数チェック
             CheckMaxLength()
 
+            '最小桁数チェック
             CheckMinLength()
 
+            '最大少数桁数チェック
             CheckDecimal()
 
         End If
@@ -387,24 +356,5 @@ Public NotInheritable Class MainPage
         End Select
 
     End Sub
-
-    'Private Function FormatDisplay(ByRef strData As String)
-
-    '    Dim intFormatData As Double
-
-    '    intFormatData = Convert.ToDouble(strData)
-
-    '    If System.Math.Floor(intFormatData) Then
-
-    '        strData = intFormatData.ToString(CON_STR_FORMAT)
-
-
-    '    End If
-
-    '    strData = intFormatData.ToString(CON_STR_FORMAT)
-
-    '    Return strData
-
-    'End Function
 
 End Class
