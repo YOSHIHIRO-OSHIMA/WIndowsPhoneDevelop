@@ -5,9 +5,40 @@
     xmlns:local="using:nichiwa_calculator"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Background="Black">
+    <Page.Resources>
+        <Color x:Key="Color1">Black</Color>
+    </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="90" Margin="60,95,0,0" TextWrapping="Wrap" Text="oshima yoshihiro9" VerticalAlignment="Top" Width="185"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,-1,0,1">
+        <FlyoutBase.AttachedFlyout>
+            <Flyout>
+                <Grid Height="60" Width="50"/>
+            </Flyout>
+        </FlyoutBase.AttachedFlyout>
+
+        <TextBox x:Name="txtNum" Text="-999,999,999" Foreground="Black" BorderBrush="Black" SelectionHighlightColor="{x:Null}" BorderThickness="0" FontSize="66" TextAlignment="Right" Width="430" Margin="0,41,-3,0" MaxLength="9" TextWrapping="Wrap" CharacterSpacing="30" FontWeight="Bold"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="84" VerticalAlignment="Top" HorizontalAlignment="Right" >
+            <TextBox.Background>
+                <SolidColorBrush Color="White"/>
+            </TextBox.Background>
+        </TextBox>
+        <Button x:Name="btnClear" Content="C" HorizontalAlignment="Stretch" Margin="0,155,216,0" VerticalAlignment="Top" BorderThickness="1" FontSize="50" BorderBrush="#FF020202" Height="108" Background="White"/>
+        <Button x:Name="btnParcent" Content="%" HorizontalAlignment="Stretch" Height="108" Margin="216,155,108,0" VerticalAlignment="Top" FontSize="50" BorderBrush="#FF020202" BorderThickness="1" Width="108" Background="#33FFFFFF"/>
+        <Button x:Name="btnDivi" Content="÷" HorizontalAlignment="Stretch" Height="108" Margin="324,155,0,0" VerticalAlignment="Top" FontSize="50" BorderBrush="#FF020202" BorderThickness="1" Background="#FF536FE8" Width="108"/>
+        <Button x:Name="btnEqual" Content="=" HorizontalAlignment="Stretch" Height="108" Margin="324,587,0,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#FF536FE8" Width="108"/>
+        <Button x:Name="btnAdd" Content="+" HorizontalAlignment="Stretch" Height="108" Margin="324,479,0,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#FF536FE8" Width="108" />
+        <Button x:Name="btnSubtr" Content="-" HorizontalAlignment="Stretch" Height="108" Margin="324,263,0,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#FF536FE8" Width="108"/>
+        <Button x:Name="btnMulti" Content="×" HorizontalAlignment="Stretch" Height="108" Margin="324,371,0,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#FF536FE8" Width="108"/>
+        <Button x:Name="btnZero" Content="0" HorizontalAlignment="Stretch" Height="108" Margin="0,587,216,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="216"/>
+        <Button x:Name="btnOne" Content="1" HorizontalAlignment="Stretch" Height="108" Margin="0,479,324,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnTwo" Content="2" HorizontalAlignment="Stretch" Height="108" Margin="108,479,216,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnThree" Content="3" HorizontalAlignment="Stretch" Height="108" Margin="216,479,108,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnFour" Content="4" HorizontalAlignment="Stretch" Height="108" Margin="0,371,324,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="107.7"/>
+        <Button x:Name="btnFive" Content="5" HorizontalAlignment="Stretch" Height="108" Margin="108,371,216,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnSix" Content="6" HorizontalAlignment="Stretch" Height="108" Margin="216,371,108,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnSeven" Content="7" HorizontalAlignment="Stretch" Margin="0,263,324,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Height="108"/>
+        <Button x:Name="btnEight" Content="8" HorizontalAlignment="Stretch" Height="108" Margin="108,263,216,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnNine" Content="9" HorizontalAlignment="Stretch" Height="108" Margin="216,263,108,0" VerticalAlignment="Top" FontSize="70" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
+        <Button x:Name="btnPoint" Content="." HorizontalAlignment="Stretch" Height="108" Margin="216,587,108,0" VerticalAlignment="Top" FontSize="80" BorderBrush="#FF020202" BorderThickness="1" Background="#33B0AAAA" Width="108"/>
     </Grid>
 </Page>
